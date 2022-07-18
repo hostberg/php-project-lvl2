@@ -24,5 +24,12 @@
     },
     "bin": [
         "bin/gendiff"
-    ]
+    ],
+    "scripts": {
+        "phpcs": "phpcs -- --standard=PSR12 src bin",
+        "phpunit": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit tests --coverage-clover ./clover.xml"
+        ]
+    }
 }

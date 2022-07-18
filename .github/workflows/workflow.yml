@@ -12,9 +12,17 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-      - name: Run installer
+          coverage: xdebug
+      - name: Run composer installer
         run: make install
-      - name: Run linter
+      - name: Run phpcs linter
         run: make lint
-      - name: Run tests
+      - name: Run phpunit tests
         run: make test
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageLocations: ${{github.workspace}}/clover.xml:clover
+          debug: true

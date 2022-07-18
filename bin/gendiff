@@ -5,6 +5,8 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use function Differ\Differ\genDiff;
+
 $doc = <<<'DOCOPT'
 Generate diff
 
@@ -19,6 +21,8 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$result = Docopt::handle($doc, array('version'=>'1.0.0rc2'));
-foreach ($result as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;
+$result = Docopt::handle($doc, array('version'=>'1.0.0rc1'));
+
+if (isset($result['<firstFile>']) && isset($result['<secondFile>'])) {
+    print_r(genDiff($result['<firstFile>'], $result['<secondFile>']));
+}

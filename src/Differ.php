@@ -1,11 +1,13 @@
 <?php
 
-namespace Differ\Diff;
+namespace Differ\Differ;
 
-function genDiff(string $pathToFile1, string $pathToFile2): string
+use function Differ\Parsers\parseFile;
+
+function genDiff(string $file1Path, string $file2Path): string
 {
-    $file1 = json_decode(file_get_contents($pathToFile1), true);
-    $file2 = json_decode(file_get_contents($pathToFile2), true);
+    $file1 = parseFile(realpath($file1Path));
+    $file2 = parseFile(realpath($file2Path));
 
     $equalRecords = array_intersect($file1, $file2);
     $removedRecords = array_diff_assoc($file1, $file2);

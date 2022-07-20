@@ -5,13 +5,14 @@
     "autoload": {
         "files": [
             "src/Differ.php",
-            "src/Parsers.php"
+            "src/Parsers.php",
+            "src/Data.php"
         ]
     },
     "authors": [
         {
             "name": "hostberg",
-            "email": "noreply@hostberg.io"
+            "email": "contact@hostberg.io"
         }
     ],
     "license": "MIT",

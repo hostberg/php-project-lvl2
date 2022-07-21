@@ -11,6 +11,6 @@ function parseFile(string $filePath): array
     return match ($fileExtension) {
         'json' => json_decode($fileData, true),
         'yml', 'yaml' => Yaml::parse($fileData),
-        default => throw new InvalidStatusCodeException('unknown file format'),
+        default => ['Unknown file format' => $fileExtension],
     };
 }

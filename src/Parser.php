@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Parsers;
+namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -11,7 +11,6 @@ function parseFile(string $filePath): array
     return match ($fileExtension) {
         'json' => json_decode($fileData, true),
         'yml', 'yaml' => Yaml::parse($fileData),
-        // TODO: some exception will be good here
-        default => ['unknown file format'],
+        default => throw new InvalidStatusCodeException('unknown file format'),
     };
 }

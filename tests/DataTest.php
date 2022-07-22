@@ -144,5 +144,9 @@ class DataTest extends TestCase
         $file1Data = parseFile($this->getFixturePath('file1.yml'));
         $file2Data = parseFile($this->getFixturePath('file2.yml'));
         $this->assertEquals(DATA_EXPECTED_DATA, getDiff($file1Data, $file2Data));
+
+        $file1Data = parseFile($this->getFixturePath('file1.json'));
+        $file2Data = parseFile($this->getFixturePath('file2.yml'));
+        $this->assertEquals(DATA_EXPECTED_DATA, getDiff($file1Data, $file2Data));
     }
 }

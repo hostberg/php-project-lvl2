@@ -20,11 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup PHP 8.1
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          coverage: xdebug
+
       - name: Hexlet project check
         uses: hexlet/project-action@release
         with:

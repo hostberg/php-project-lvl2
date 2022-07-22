@@ -12,7 +12,9 @@
             "src/Parser.php",
             "src/Data.php",
             "src/Formatter/Formatter.php",
-            "src/Formatter/Stylish.php"
+            "src/Formatter/Stylish.php",
+            "src/Formatter/Plain.php",
+            "src/Formatter/Json.php"
         ]
     },
     "authors": [

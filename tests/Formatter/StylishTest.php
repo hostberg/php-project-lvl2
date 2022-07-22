@@ -60,7 +60,7 @@ class StylishTest extends TestCase
         return realpath('./tests/fixtures/' . $file);
     }
 
-    public function testGetLines(): void
+    public function testFormatStylish(): void
     {
         $file1Data = parseFile($this->getFixturePath('file1.json'));
         $file2Data = parseFile($this->getFixturePath('file2.json'));

@@ -5,17 +5,18 @@ namespace Differ\Formatter\Stylish;
 function getValue($value, string $indent = ''): string
 {
     if (is_array($value)) {
-        $result = array_reduce(array_keys($value), function ($lines, $node) use ($value, $indent) {
+        $arrayValue = array_reduce(array_keys($value), function ($lines, $node) use ($value, $indent) {
             $indent .= '    ';
             $lines[] = $indent . $node . ': ' . getValue($value[$node], $indent);
             return $lines;
         }, []);
-        return "{\n" . implode("\n", $result) . "\n" . $indent . "}";
+        $result = "{\n" . implode("\n", $arrayValue) . "\n" . $indent . "}";
     } elseif (is_string($value)) {
-        return $value;
+        $result = $value;
     } else {
-        return json_encode($value);
+        $result = json_encode($value);
     }
+    return $result;
 }
 
 function formatStylish(array $data, string $indent = '    '): string

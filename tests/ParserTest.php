@@ -1,12 +1,12 @@
 <?php
 
-namespace Differ\Tests\Parser;
+namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 use function Differ\Parser\parseFile;
 
-const EXPECTED_DATA = [
+const PARSER_EXPECTED_DATA = [
     'data1' => [
         'key1' => 'value 1',
         'data2' => [
@@ -24,7 +24,7 @@ class ParserTest extends TestCase
 
     public function testParseFile(): void
     {
-        $this->assertEquals(EXPECTED_DATA, parseFile($this->getFixturePath('simple_file.json')));
-        $this->assertEquals(EXPECTED_DATA, parseFile($this->getFixturePath('simple_file.yaml')));
+        $this->assertEquals(PARSER_EXPECTED_DATA, parseFile($this->getFixturePath('simple_file.json')));
+        $this->assertEquals(PARSER_EXPECTED_DATA, parseFile($this->getFixturePath('simple_file.yaml')));
     }
 }

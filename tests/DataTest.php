@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ\Tests\Data;
+namespace Differ\Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -8,7 +8,7 @@ use function Differ\Parser\parseFile;
 use function Differ\Data\getDiff;
 use function Differ\Data\getNodeNames;
 
-const EXPECTED_DATA = [
+const DATA_EXPECTED_DATA = [
     'common' => [
         'children' => [
             'follow' => [
@@ -139,10 +139,10 @@ class DataTest extends TestCase
     {
         $file1Data = parseFile($this->getFixturePath('file1.json'));
         $file2Data = parseFile($this->getFixturePath('file2.json'));
-        $this->assertEquals(EXPECTED_DATA, getDiff($file1Data, $file2Data));
+        $this->assertEquals(DATA_EXPECTED_DATA, getDiff($file1Data, $file2Data));
 
         $file1Data = parseFile($this->getFixturePath('file1.yml'));
         $file2Data = parseFile($this->getFixturePath('file2.yml'));
-        $this->assertEquals(EXPECTED_DATA, getDiff($file1Data, $file2Data));
+        $this->assertEquals(DATA_EXPECTED_DATA, getDiff($file1Data, $file2Data));
     }
 }

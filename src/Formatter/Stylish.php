@@ -1,0 +1,53 @@
+<?php
+
+namespace Differ\Formatter\Stylish;
+
+function getValue($value, string $indent = ''): string
+{
+    if (is_array($value)) {
+        $result = array_reduce(array_keys($value), function ($lines, $node) use ($value, $indent) {
+            $indent .= '    ';
+            $lines[] = $indent . $node . ': ' . getValue($value[$node], $indent);
+            return $lines;
+        }, []);
+        return "{\n" . implode("\n", $result) . "\n" . $indent . "}";
+    } elseif (is_string($value)) {
+        return $value;
+    } else {
+        return json_encode($value);
+    }
+}
+
+function formatStylish(array $data, string $indent = '    '): string
+{
+    $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $indent) {
+        switch ($data[$node]['status']) {
+            case 'nested':
+                $linePrefix = substr($indent, 0, -2) . '  ';
+                $lines[] = $linePrefix . $node . ': ' . formatStylish($data[$node]['children'], $indent . '    ');
+                break;
+            case 'added':
+                $linePrefix = substr($indent, 0, -2) . '+ ';
+                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+                break;
+            case 'deleted':
+                $linePrefix = substr($indent, 0, -2) . '- ';
+                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+                break;
+            case 'unchanged':
+                $linePrefix = substr($indent, 0, -2) . '  ';
+                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+                break;
+            case 'changed':
+                $linePrefix = substr($indent, 0, -2) . '- ';
+                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['oldValue'], $indent);
+                $linePrefix = substr($indent, 0, -2) . '+ ';
+                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['newValue'], $indent);
+                break;
+            default:
+                break;
+        }
+        return $lines;
+    }, []);
+    return "{\n" . implode("\n", $result) . "\n" . substr($indent, 0, -4) . "}";
+}

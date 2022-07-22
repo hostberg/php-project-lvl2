@@ -21,8 +21,10 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$result = Docopt::handle($doc, array('version'=>'1.0.0rc1'));
+$args = Docopt::handle($doc, array('version'=>'1.0.0rc1'));
 
-if (isset($result['<firstFile>']) && isset($result['<secondFile>'])) {
-    print_r(genDiff($result['<firstFile>'], $result['<secondFile>']));
+if (isset($args['<firstFile>']) && isset($args['<secondFile>'])) {
+    print_r(genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']));
 }
+
+// TODO: create run() function

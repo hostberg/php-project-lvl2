@@ -1,5 +1,5 @@
 {
-    "name": "hostberg/differ",
+    "name": "hexlet/code",
     "description": "Differ - Hexlet PHP Project lvl2",
     "type": "project",
     "autoload": {

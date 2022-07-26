@@ -23,7 +23,7 @@ function getDiff(array $data1, array $data2): array
 //                'value' => $data2[$nodeName],
 //                'status' => 'added'
 //            ];
-            $carry[] = [
+            $carry += [
                 'name' => $nodeName,
                 'value' => $data2[$nodeName],
                 'status' => 'added'
@@ -33,7 +33,7 @@ function getDiff(array $data1, array $data2): array
 //                'value' => $data1[$nodeName],
 //                'status' => 'deleted'
 //            ];
-            $carry[] = [
+            $carry += [
                 'name' => $nodeName,
                 'value' => $data1[$nodeName],
                 'status' => 'deleted'
@@ -43,7 +43,7 @@ function getDiff(array $data1, array $data2): array
 //                'value' => $data2[$nodeName],
 //                'status' => 'unchanged'
 //            ];
-            $carry[] = [
+            $carry += [
                 'name' => $nodeName,
                 'value' => $data2[$nodeName],
                 'status' => 'unchanged'
@@ -54,7 +54,7 @@ function getDiff(array $data1, array $data2): array
 //                'children' => $children,
 //                'status' => 'nested'
 //            ];
-            $carry[] = [
+            $carry += [
                 'name' => $nodeName,
                 'children' => $children,
                 'status' => 'nested'
@@ -64,7 +64,7 @@ function getDiff(array $data1, array $data2): array
 //                'oldValue' => $data1[$nodeName],
 //                'newValue' => $data2[$nodeName],
 //                'status' => 'changed'];
-            $carry[] = [
+            $carry += [
                 'name' => $nodeName,
                 'oldValue' => $data1[$nodeName],
                 'newValue' => $data2[$nodeName],

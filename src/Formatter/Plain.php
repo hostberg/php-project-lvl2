@@ -19,18 +19,18 @@ function formatPlain(array $data, bool $returnString = true, string $path = ''):
     $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $path) {
         switch ($data[$node]['status']) {
             case 'nested':
-                $path .= $node . '.';
+                $path .= $data[$node]['name'] . '.';
                 $nestedLines = formatPlain($data[$node]['children'], false, $path);
                 $lines = array_merge($lines, $nestedLines);
                 break;
             case 'added':
-                $lines[] = 'Property \'' . $path . $node . '\' was added with value: ' . getValue($data[$node]['value']);
+                $lines[] = 'Property \'' . $path . $data[$node]['name'] . '\' was added with value: ' . getValue($data[$node]['value']);
                 break;
             case 'deleted':
-                $lines[] = 'Property \'' . $path . $node . '\' was removed';
+                $lines[] = 'Property \'' . $path . $data[$node]['name'] . '\' was removed';
                 break;
             case 'changed':
-                $lines[] = 'Property \'' . $path . $node . '\' was updated. From ' . getValue($data[$node]['oldValue']) . ' to ' . getValue($data[$node]['newValue']);
+                $lines[] = 'Property \'' . $path . $data[$node]['name'] . '\' was updated. From ' . getValue($data[$node]['oldValue']) . ' to ' . getValue($data[$node]['newValue']);
                 break;
             default:
                 break;
@@ -39,3 +39,29 @@ function formatPlain(array $data, bool $returnString = true, string $path = ''):
     }, []);
     return $returnString ? implode("\n", $result) : $result;
 }
+
+//function formatPlain(array $data, bool $returnString = true, string $path = ''): array|string
+//{
+//    $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $path) {
+//        switch ($data[$node]['status']) {
+//            case 'nested':
+//                $path .= $node . '.';
+//                $nestedLines = formatPlain($data[$node]['children'], false, $path);
+//                $lines = array_merge($lines, $nestedLines);
+//                break;
+//            case 'added':
+//                $lines[] = 'Property \'' . $path . $node . '\' was added with value: ' . getValue($data[$node]['value']);
+//                break;
+//            case 'deleted':
+//                $lines[] = 'Property \'' . $path . $node . '\' was removed';
+//                break;
+//            case 'changed':
+//                $lines[] = 'Property \'' . $path . $node . '\' was updated. From ' . getValue($data[$node]['oldValue']) . ' to ' . getValue($data[$node]['newValue']);
+//                break;
+//            default:
+//                break;
+//        }
+//        return $lines;
+//    }, []);
+//    return $returnString ? implode("\n", $result) : $result;
+//}

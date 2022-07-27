@@ -5,11 +5,10 @@ namespace Differ\Formatter\Stylish;
 function getValue(mixed $value, string $indent = ''): string
 {
     if (is_array($value)) {
-        $arrayValue = array_reduce(array_keys($value), function ($lines, $node) use ($value, $indent) {
+        $arrayValue = array_map(function ($nodeValue, $nodeName) use ($indent) {
             $indent .= '    ';
-            $lines[] = $indent . $node . ': ' . getValue($value[$node], $indent);
-            return $lines;
-        }, []);
+            return $indent . $nodeName . ': ' . getValue($nodeValue, $indent);
+        }, $value, array_keys($value));
         $result = "{\n" . implode("\n", $arrayValue) . "\n" . $indent . "}";
     } elseif (is_string($value)) {
         $result = $value;

@@ -55,13 +55,15 @@ function formatPlain(array $data, string $path = ''): string
 //                $lines = array_merge($lines, $nestedLines);
 //                break;
 //            case 'added':
-//                $lines[] = 'Property \'' . $path . $node . '\' was added with value: ' . getValue($data[$node]['value']);
+//                $lines[] = 'Property \'' . $path . $node . '\' was added with value: '
+// . getValue($data[$node]['value']);
 //                break;
 //            case 'deleted':
 //                $lines[] = 'Property \'' . $path . $node . '\' was removed';
 //                break;
 //            case 'changed':
-//                $lines[] = 'Property \'' . $path . $node . '\' was updated. From ' . getValue($data[$node]['oldValue']) . ' to ' . getValue($data[$node]['newValue']);
+//                $lines[] = 'Property \'' . $path . $node . '\' was updated. From '
+// . getValue($data[$node]['oldValue']) . ' to ' . getValue($data[$node]['newValue']);
 //                break;
 //            default:
 //                break;

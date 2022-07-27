@@ -7,7 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 function parseFile(string $filePath): array
 {
     $fileData = file_get_contents($filePath);
-    if (!$fileData) {
+    if ($fileData === false) {
         return 'No input data';
     }
     $fileExtension = isset(pathinfo($filePath)['extension']) ? pathinfo($filePath)['extension'] : '';

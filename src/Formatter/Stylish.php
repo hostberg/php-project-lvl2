@@ -2,7 +2,7 @@
 
 namespace Differ\Formatter\Stylish;
 
-function getValue($value, string $indent = ''): string
+function getValue(mixed $value, string $indent = ''): string
 {
     if (is_array($value)) {
         $arrayValue = array_reduce(array_keys($value), function ($lines, $node) use ($value, $indent) {

@@ -8,9 +8,13 @@ use function Differ\Formatter\Formatter\formatData;
 
 function genDiff(string $file1Path, string $file2Path, string $format = 'stylish'): string
 {
-    $file1Data = parseFile(realpath($file1Path));
-    $file2Data = parseFile(realpath($file2Path));
+    $file1RealPath = realpath($file1Path);
+    $file2RealPath = realpath($file2Path);
+    if (!$file1RealPath || !$file2RealPath) {
+        return 'Can\'t get access to file[s] ';
+    }
+    $file1Data = parseFile($file1RealPath);
+    $file2Data = parseFile($file2RealPath);
     $data = getDiff($file1Data, $file2Data);
-//    var_dump($data);
     return formatData($data, $format);
 }

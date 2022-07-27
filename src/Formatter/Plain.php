@@ -2,7 +2,7 @@
 
 namespace Differ\Formatter\Plain;
 
-function getValue($value): string
+function getValue(mixed $value): string
 {
     if (is_array($value)) {
         $result = '[complex value]';

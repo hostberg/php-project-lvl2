@@ -10,7 +10,7 @@ function genDiff(string $file1Path, string $file2Path, string $format = 'stylish
 {
     $file1RealPath = realpath($file1Path);
     $file2RealPath = realpath($file2Path);
-    if (!$file1RealPath || !$file2RealPath) {
+    if (!is_string($file1RealPath) || !is_string($file2RealPath)) {
         return 'Can\'t get access to file[s] ';
     }
     $file1Data = parseFile($file1RealPath);

@@ -45,35 +45,4 @@ function getDiff(array $data1, array $data2): array
         }
         return $node;
     }, $nodeNames);
-
-//    return array_reduce($nodeNames, function ($carry, $nodeName) use ($data1, $data2) {
-//        if (!array_key_exists($nodeName, $data1)) {
-//            $carry[$nodeName] = [
-//                'value' => $data2[$nodeName],
-//                'status' => 'added'
-//            ];
-//        } elseif (!array_key_exists($nodeName, $data2)) {
-//            $carry[$nodeName] = [
-//                'value' => $data1[$nodeName],
-//                'status' => 'deleted'
-//            ];
-//        } elseif ($data1[$nodeName] === $data2[$nodeName]) {
-//            $carry[$nodeName] = [
-//                'value' => $data2[$nodeName],
-//                'status' => 'unchanged'
-//            ];
-//        } elseif (is_array($data1[$nodeName]) && is_array($data2[$nodeName])) {
-//            $children = getDiff($data1[$nodeName], $data2[$nodeName]);
-//            $carry[$nodeName] = [
-//                'children' => $children,
-//                'status' => 'nested'
-//            ];
-//        } else {
-//            $carry[$nodeName] = [
-//                'oldValue' => $data1[$nodeName],
-//                'newValue' => $data2[$nodeName],
-//                'status' => 'changed'];
-//        }
-//        return $carry;
-//    }, []);
 }

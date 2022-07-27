@@ -26,5 +26,3 @@ $args = Docopt::handle($doc, array('version'=>'1.0.0rc1'));
 if (isset($args['<firstFile>']) && isset($args['<secondFile>'])) {
     print_r(genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']));
 }
-
-// TODO: create run() function

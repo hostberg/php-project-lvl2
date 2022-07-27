@@ -4,17 +4,20 @@ namespace Differ\Data;
 
 use function Functional\sort;
 
-function getNodeNames(array ...$dataSources): array
-{
-    return array_reduce($dataSources, function ($carry, $data) {
-        $carry = array_unique(array_merge($carry, array_keys($data)));
-        return sort($carry, fn ($left, $right) => $left <=> $right);
-    }, []);
-}
+//function getNodeNames(array ...$dataSources): array
+//{
+//    return array_reduce($dataSources, function ($carry, $data) {
+//        $carry = array_unique(array_merge($carry, array_keys($data)));
+//        return sort($carry, fn ($left, $right) => $left <=> $right);
+//    }, []);
+//}
 
 function getDiff(array $data1, array $data2): array
 {
-    $nodeNames = getNodeNames($data1, $data2);
+//    $nodeNames = getNodeNames($data1, $data2);
+
+    $nodeNames = array_merge(array_keys($data1), array_keys($data2));
+    $nodeNames = sort(array_unique($nodeNames), fn ($left, $right) => $left <=> $right);
 
     return array_map(function ($nodeName) use ($data1, $data2) {
         if (!array_key_exists($nodeName, $data1)) {

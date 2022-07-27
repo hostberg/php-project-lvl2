@@ -19,31 +19,97 @@ function getValue($value, string $indent = ''): string
     return $result;
 }
 
+function formatStylish(array $data, string $indent = '    '): string
+{
+    $result = array_map(function ($node) use ($indent) {
+        switch ($node['status']) {
+            case 'nested':
+                $linePrefix = substr($indent, 0, -2) . '  ';
+                $line = $linePrefix . $node['name'] . ': ' . formatStylish($node['children'], $indent . '    ');
+                break;
+            case 'added':
+                $linePrefix = substr($indent, 0, -2) . '+ ';
+                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                break;
+            case 'deleted':
+                $linePrefix = substr($indent, 0, -2) . '- ';
+                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                break;
+            case 'unchanged':
+                $linePrefix = substr($indent, 0, -2) . '  ';
+                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                break;
+            case 'changed':
+                $linePrefix = substr($indent, 0, -2) . '- ';
+                $line = $linePrefix . $node['name'] . ': ' . getValue($node['oldValue'], $indent);
+                $linePrefix = substr($indent, 0, -2) . '+ ';
+                $line .= "\n" . $linePrefix . $node['name'] . ': ' . getValue($node['newValue'], $indent);
+                break;
+            default:
+                $line = [];
+        }
+        return $line;
+    }, $data);
+
+//    $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $indent) {
+//        switch ($data[$node]['status']) {
+//            case 'nested':
+//                $linePrefix = substr($indent, 0, -2) . '  ';
+//                $lines[] = $linePrefix . $node . ': ' . formatStylish($data[$node]['children'], $indent . '    ');
+//                break;
+//            case 'added':
+//                $linePrefix = substr($indent, 0, -2) . '+ ';
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+//                break;
+//            case 'deleted':
+//                $linePrefix = substr($indent, 0, -2) . '- ';
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+//                break;
+//            case 'unchanged':
+//                $linePrefix = substr($indent, 0, -2) . '  ';
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
+//                break;
+//            case 'changed':
+//                $linePrefix = substr($indent, 0, -2) . '- ';
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['oldValue'], $indent);
+//                $linePrefix = substr($indent, 0, -2) . '+ ';
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['newValue'], $indent);
+//                break;
+//            default:
+//                break;
+//        }
+//        return $lines;
+//    }, []);
+    return "{\n" . implode("\n", $result) . "\n" . substr($indent, 0, -4) . "}";
+//    print_r($result);
+//    return '';
+}
+
 //function formatStylish(array $data, string $indent = '    '): string
 //{
 //    $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $indent) {
 //        switch ($data[$node]['status']) {
 //            case 'nested':
 //                $linePrefix = substr($indent, 0, -2) . '  ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . formatStylish($data[$node]['children'], $indent . '    ');
+//                $lines[] = $linePrefix . $node . ': ' . formatStylish($data[$node]['children'], $indent . '    ');
 //                break;
 //            case 'added':
 //                $linePrefix = substr($indent, 0, -2) . '+ ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . getValue($data[$node]['value'], $indent);
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
 //                break;
 //            case 'deleted':
 //                $linePrefix = substr($indent, 0, -2) . '- ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . getValue($data[$node]['value'], $indent);
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
 //                break;
 //            case 'unchanged':
 //                $linePrefix = substr($indent, 0, -2) . '  ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . getValue($data[$node]['value'], $indent);
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
 //                break;
 //            case 'changed':
 //                $linePrefix = substr($indent, 0, -2) . '- ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . getValue($data[$node]['oldValue'], $indent);
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['oldValue'], $indent);
 //                $linePrefix = substr($indent, 0, -2) . '+ ';
-//                $lines[] = $linePrefix . $data[$node]['name'] . ': ' . getValue($data[$node]['newValue'], $indent);
+//                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['newValue'], $indent);
 //                break;
 //            default:
 //                break;
@@ -52,37 +118,3 @@ function getValue($value, string $indent = ''): string
 //    }, []);
 //    return "{\n" . implode("\n", $result) . "\n" . substr($indent, 0, -4) . "}";
 //}
-
-function formatStylish(array $data, string $indent = '    '): string
-{
-    $result = array_reduce(array_keys($data), function ($lines, $node) use ($data, $indent) {
-        switch ($data[$node]['status']) {
-            case 'nested':
-                $linePrefix = substr($indent, 0, -2) . '  ';
-                $lines[] = $linePrefix . $node . ': ' . formatStylish($data[$node]['children'], $indent . '    ');
-                break;
-            case 'added':
-                $linePrefix = substr($indent, 0, -2) . '+ ';
-                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
-                break;
-            case 'deleted':
-                $linePrefix = substr($indent, 0, -2) . '- ';
-                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
-                break;
-            case 'unchanged':
-                $linePrefix = substr($indent, 0, -2) . '  ';
-                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['value'], $indent);
-                break;
-            case 'changed':
-                $linePrefix = substr($indent, 0, -2) . '- ';
-                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['oldValue'], $indent);
-                $linePrefix = substr($indent, 0, -2) . '+ ';
-                $lines[] = $linePrefix . $node . ': ' . getValue($data[$node]['newValue'], $indent);
-                break;
-            default:
-                break;
-        }
-        return $lines;
-    }, []);
-    return "{\n" . implode("\n", $result) . "\n" . substr($indent, 0, -4) . "}";
-}

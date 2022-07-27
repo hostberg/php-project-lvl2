@@ -2,12 +2,13 @@
 
 namespace Differ\Data;
 
+use function Functional\sort;
+
 function getNodeNames(array ...$dataSources): array
 {
     return array_reduce($dataSources, function ($carry, $data) {
         $carry = array_unique(array_merge($carry, array_keys($data)));
-        sort($carry); // TODO: Delete after debug
-        return $carry;
+        return sort($carry, fn ($left, $right) => $left <=> $right);
     }, []);
 }
 

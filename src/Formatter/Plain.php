@@ -20,8 +20,8 @@ function formatPlain(array $data, string $path = ''): string
         $property = $path . $node['name'];
         switch ($node['status']) {
             case 'nested':
-                $path .= $node['name'] . '.';
-                $line = formatPlain($node['children'], $path);
+                $nestedPath = $path . $node['name'] . '.';
+                $line = formatPlain($node['children'], $nestedPath);
                 break;
             case 'added':
                 $value = getValue($node['value']);

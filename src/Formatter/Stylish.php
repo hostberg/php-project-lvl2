@@ -6,8 +6,8 @@ function getValue(mixed $value, string $indent = ''): string
 {
     if (is_array($value)) {
         $arrayValue = array_map(function ($nodeValue, $nodeName) use ($indent) {
-            $indent .= '    ';
-            return $indent . $nodeName . ': ' . getValue($nodeValue, $indent);
+            $nestedIndent = $indent . '    ';
+            return $nestedIndent . $nodeName . ': ' . getValue($nodeValue, $nestedIndent);
         }, $value, array_keys($value));
         $result = "{\n" . implode("\n", $arrayValue) . "\n" . $indent . "}";
     } elseif (is_string($value)) {
@@ -39,10 +39,11 @@ function formatStylish(array $data, string $indent = '    '): string
                 $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
                 break;
             case 'changed':
-                $linePrefix = substr($indent, 0, -2) . '- ';
-                $line = $linePrefix . $node['name'] . ': ' . getValue($node['oldValue'], $indent);
-                $linePrefix = substr($indent, 0, -2) . '+ ';
-                $line .= "\n" . $linePrefix . $node['name'] . ': ' . getValue($node['newValue'], $indent);
+                $oldLinePrefix = substr($indent, 0, -2) . '- ';
+                $oldLine = $oldLinePrefix . $node['name'] . ': ' . getValue($node['oldValue'], $indent);
+                $newLinePrefix = substr($indent, 0, -2) . '+ ';
+                $newline = $newLinePrefix . $node['name'] . ': ' . getValue($node['newValue'], $indent);
+                $line = $oldLine . "\n" . $newline;
                 break;
             default:
                 $line = '';

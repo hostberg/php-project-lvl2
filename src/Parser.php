@@ -6,7 +6,8 @@ use Symfony\Component\Yaml\Yaml;
 
 function parseFile(string $filePath): array
 {
-    $fileData = file_get_contents(realpath($filePath));
+    $fileRealPath = realpath($filePath) ?? throw new \Exception("Can't find file: ". $filePath);
+    $fileData = file_get_contents($fileRealPath) ?? throw new \Exception("Can't access file: ". $filePath);
 //    if ($fileData === false) {
 //        return 'No input data';
 //    }

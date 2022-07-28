@@ -12,6 +12,6 @@ function formatData(array $data, string $format): string
         'stylish' => formatStylish($data),
         'plain' => formatPlain($data),
         'json' => formatJson($data),
-        default => "Unknown format style: ${format}",
+        default => throw new \Exception("Unknown format style: ${format}"),
     };
 }

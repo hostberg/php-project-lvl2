@@ -6,11 +6,11 @@ use Symfony\Component\Yaml\Yaml;
 
 function parseFile(string $filePath): array
 {
-    if (!realpath($filePath)) {
+    if (realpath($filePath) === false) {
         throw new \Exception("Can't find file: ${filePath}");
     }
     $fileRealPath = realpath($filePath);
-    if (!file_get_contents($fileRealPath)) {
+    if (file_get_contents($fileRealPath) === false) {
         throw new \Exception("Can't access file: ${filePath}");
     }
     $fileData = file_get_contents($fileRealPath);

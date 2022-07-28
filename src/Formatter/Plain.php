@@ -2,7 +2,7 @@
 
 namespace Differ\Formatter\Plain;
 
-function getValue(mixed $value): string
+function stringify(mixed $value): string
 {
     if (is_array($value)) {
         $result = '[complex value]';
@@ -24,15 +24,15 @@ function formatPlain(array $data, string $path = ''): string
                 $line = formatPlain($node['children'], $nestedPath);
                 break;
             case 'added':
-                $value = getValue($node['value']);
+                $value = stringify($node['value']);
                 $line = "Property '${property}' was added with value: ${value}";
                 break;
             case 'deleted':
                 $line = "Property '${property}' was removed";
                 break;
             case 'changed':
-                $oldValue = getValue($node['oldValue']);
-                $newValue = getValue($node['newValue']);
+                $oldValue = stringify($node['oldValue']);
+                $newValue = stringify($node['newValue']);
                 $line = "Property '${property}' was updated. From ${oldValue} to ${newValue}";
                 break;
             default:

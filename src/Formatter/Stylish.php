@@ -2,12 +2,12 @@
 
 namespace Differ\Formatter\Stylish;
 
-function getValue(mixed $value, string $indent = ''): string
+function stringify(mixed $value, string $indent = ''): string
 {
     if (is_array($value)) {
         $arrayValue = array_map(function ($nodeValue, $nodeName) use ($indent) {
             $nestedIndent = $indent . '    ';
-            return $nestedIndent . $nodeName . ': ' . getValue($nodeValue, $nestedIndent);
+            return $nestedIndent . $nodeName . ': ' . stringify($nodeValue, $nestedIndent);
         }, $value, array_keys($value));
         $result = "{\n" . implode("\n", $arrayValue) . "\n" . $indent . "}";
     } elseif (is_string($value)) {
@@ -28,21 +28,21 @@ function formatStylish(array $data, string $indent = '    '): string
                 break;
             case 'added':
                 $linePrefix = substr($indent, 0, -2) . '+ ';
-                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                $line = $linePrefix . $node['name'] . ': ' . stringify($node['value'], $indent);
                 break;
             case 'deleted':
                 $linePrefix = substr($indent, 0, -2) . '- ';
-                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                $line = $linePrefix . $node['name'] . ': ' . stringify($node['value'], $indent);
                 break;
             case 'unchanged':
                 $linePrefix = substr($indent, 0, -2) . '  ';
-                $line = $linePrefix . $node['name'] . ': ' . getValue($node['value'], $indent);
+                $line = $linePrefix . $node['name'] . ': ' . stringify($node['value'], $indent);
                 break;
             case 'changed':
                 $oldLinePrefix = substr($indent, 0, -2) . '- ';
-                $oldLine = $oldLinePrefix . $node['name'] . ': ' . getValue($node['oldValue'], $indent);
+                $oldLine = $oldLinePrefix . $node['name'] . ': ' . stringify($node['oldValue'], $indent);
                 $newLinePrefix = substr($indent, 0, -2) . '+ ';
-                $newline = $newLinePrefix . $node['name'] . ': ' . getValue($node['newValue'], $indent);
+                $newline = $newLinePrefix . $node['name'] . ': ' . stringify($node['newValue'], $indent);
                 $line = $oldLine . "\n" . $newline;
                 break;
             default:

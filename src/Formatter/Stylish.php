@@ -6,10 +6,7 @@ function getIndent(int $depth, ?string $flag = null): string
 {
     $step = '    ';
     $indent = str_repeat($step, $depth);
-    if (isset($flag)) {
-        $indent = substr($indent, 0, -2) . $flag . ' ';
-    }
-    return $indent;
+    return isset($flag) ? substr($indent, 0, -2) . $flag . ' ' : $indent;
 }
 
 function stringify(mixed $value, int $depth = 1): string

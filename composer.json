@@ -10,7 +10,6 @@
         "files": [
             "src/Differ.php",
             "src/Parser.php",
-            "src/Data.php",
             "src/Formatter/Formatter.php",
             "src/Formatter/Stylish.php",
             "src/Formatter/Plain.php",

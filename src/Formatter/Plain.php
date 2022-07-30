@@ -25,18 +25,18 @@ function formatPlain(array $data, string $path = ''): string
                 break;
             case 'added':
                 $value = stringify($node['value']);
-                $line = "Property '${property}' was added with value: ${value}";
+                $line = 'Property \'' . $property . '\' was added with value: ' . $value;
                 break;
             case 'deleted':
-                $line = "Property '${property}' was removed";
+                $line = 'Property \'' . $property . '\' was removed';
                 break;
             case 'changed':
                 $oldValue = stringify($node['oldValue']);
                 $newValue = stringify($node['newValue']);
-                $line = "Property '${property}' was updated. From ${oldValue} to ${newValue}";
+                $line = 'Property \'' . $property . '\' was updated. From ' . $oldValue . ' to ' . $newValue;
                 break;
             default:
-                $line = [];
+                $line = null;
         }
         return $line;
     }, $data);
